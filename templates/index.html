@@ -142,33 +142,39 @@ function checkTime(i) {
 }
 </script>
 <script>
-  let currentStep = 0;
-  const cubes = document.querySelectorAll('.cube');
-  const rightButton = document.querySelector('.material-icons[innerText="keyboard_double_arrow_right"]');
+  window.onload = function () {
+      let currentStep = 0;
+      const cubes = document.querySelectorAll('.cube');
+      const rightArrow = [...document.querySelectorAll('.material-icons')].find(
+          icon => icon.textContent.includes("keyboard_double_arrow_right")
+      );
   
-  const buttons = document.querySelectorAll('.material-icons');
-  const rightArrow = [...buttons].find(btn => btn.textContent.includes("keyboard_double_arrow_right"));
-  
-  function highlightCube(index) {
-      cubes.forEach((cube, i) => {
-          cube.classList.remove('active');
-          if (i === index) {
-              cube.classList.add('active');
-          }
-      });
-  }
-  
-  rightArrow.addEventListener('click', () => {
-      if (currentStep < cubes.length) {
-          highlightCube(currentStep);
-          currentStep++;
-      } else {
-          alert("Resetting to the first step.");
-          currentStep = 0;
-          highlightCube(currentStep);
-          currentStep++;
+      function highlightCube(index) {
+          cubes.forEach((cube, i) => {
+              cube.classList.remove('active');
+              if (i === index) {
+                  cube.classList.add('active');
+              }
+          });
       }
-  });
+  
+      if (rightArrow) {
+          rightArrow.addEventListener('click', () => {
+              if (currentStep < cubes.length) {
+                  highlightCube(currentStep);
+                  currentStep++;
+              } else {
+                  alert("Restarting");
+                  currentStep = 0;
+                  highlightCube(currentStep);
+                  currentStep++;
+              }
+          });
+      } else {
+          console.error("Right arrow button not found!");
+      }
+  }
   </script>
+  
 </body>
 </html>
