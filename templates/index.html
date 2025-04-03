@@ -103,7 +103,7 @@ button:hover {
 }
 
     </style>
-<body onload="startTime()">
+<body>
     <h1>Welcome to the Flight Boarding System</h1>
     <p>The current time is: </p>
     <div id="txt"></div>
@@ -143,6 +143,7 @@ function checkTime(i) {
 </script>
 <script>
   window.onload = function () {
+      startTime();
       let currentStep = 0;
       const cubes = document.querySelectorAll('.cube');
       const rightArrow = [...document.querySelectorAll('.material-icons')].find(
@@ -175,6 +176,8 @@ function checkTime(i) {
       }
   }
   </script>
-  
+    <footer>
+        <p>&copy; 2023 FlightBoard Inc.</p>
+    </footer>
 </body>
 </html>
