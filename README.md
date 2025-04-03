@@ -44,3 +44,5 @@ This is a simple, interactive web-based UI for tracking the progress of a flight
 ```bash
 python app.py
 
+
+![flightboarding](https://github.com/user-attachments/assets/b28aa83b-fd36-4d70-ba52-b783f1e5d721)
