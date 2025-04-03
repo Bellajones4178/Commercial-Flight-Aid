@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Boarding</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 36px;
+}
+
+p {
+    font-size: 30px;
+}
+
+#txt {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.component {
+    width: 75%;
+    max-width: 900px;
+    background-color: #333;
+    text-align: center;
+    padding: 30px;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    border-radius: 22.5px;
+}
+
+.title {
+    font-size: 37.5px;
+    font-weight: bold;
+    color: white;
+    grid-column: 1 / -1;
+}
+
+.cube {
+    height: 150px;
+    background-color: #FFD700;
+    color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7.5px;
+    padding: 15px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 15px;
+    font-size: 24px;
+}
+
+.cube img {
+    width: 90px;
+    height: 90px;
+}
+
+.button-container {
+    grid-column: 2/3;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 24px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 7.5px;
+}
+
+button:hover {
+    background-color: white;
+    color: #2c3e50;
+}
+.cube.active {
+    outline: 5px solid white;
+    background-color: #f39c12;
+}
+
+    </style>
+<body onload="startTime()">
+    <h1>Welcome to the Flight Boarding System</h1>
+    <p>The current time is: </p>
+    <div id="txt"></div>
+    <div class="component">
+    <h2 class="title">Boarding Progress</h2>
+    <div class="cube">Deplaning
+      <img src="{{ url_for('static', filename='images/deplane.png') }}" alt="airplane icon making landing" style="width:75px;height:75px;">
+    </div>
+    <div class="cube">Cleaning
+      <img src="{{ url_for('static', filename='images/clean.png') }}" alt="airplane icon making landing" style="width:75px;height:75px;">
+    </div>
+    <div class="cube">Boarding
+      <img src="{{ url_for('static', filename='images/boarding.png') }}" alt="airplane icon making landing" style="width:75px;height:75px;">
+    </div>
+    <div class="button-container">
+    <button><i class="material-icons">keyboard_double_arrow_left</i></button>
+    <button><i class="material-icons">keyboard_double_arrow_right</i></button>
+    </div>
+    </div>
+
+<script>
+function startTime() {
+  const today = new Date();
+  let h = today.getHours();
+  let m = today.getMinutes();
+  let s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+  setTimeout(startTime, 1000);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  
+  return i;
+}
+</script>
+<script>
+  let currentStep = 0;
+  const cubes = document.querySelectorAll('.cube');
+  const rightButton = document.querySelector('.material-icons[innerText="keyboard_double_arrow_right"]');
+  
+  const buttons = document.querySelectorAll('.material-icons');
+  const rightArrow = [...buttons].find(btn => btn.textContent.includes("keyboard_double_arrow_right"));
+  
+  function highlightCube(index) {
+      cubes.forEach((cube, i) => {
+          cube.classList.remove('active');
+          if (i === index) {
+              cube.classList.add('active');
+          }
+      });
+  }
+  
+  rightArrow.addEventListener('click', () => {
+      if (currentStep < cubes.length) {
+          highlightCube(currentStep);
+          currentStep++;
+      } else {
+          alert("Resetting to the first step.");
+          currentStep = 0;
+          highlightCube(currentStep);
+          currentStep++;
+      }
+  });
+  </script>
+</body>
+</html>
